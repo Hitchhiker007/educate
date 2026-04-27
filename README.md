@@ -67,6 +67,7 @@ def fetch_user(url):
 
 ## 🌊 Flow
 
+```
 VS Code Extension
        ↓  (POST /educate with code snippet)
 FastAPI on Cloud Run
@@ -78,6 +79,7 @@ FastAPI on Cloud Run
 VS Code Extension
        ↓  (buildComments())
 Code Editor  ←  comments inserted above function
+```
 
 ---
 
