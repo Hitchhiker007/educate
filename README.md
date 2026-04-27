@@ -65,6 +65,22 @@ def fetch_user(url):
 
 ---
 
+## 🌊 Flow
+
+VS Code Extension
+       ↓  (POST /educate with code snippet)
+FastAPI on Cloud Run
+       ↓  (prompt + code)
+Google Gemini API
+       ↓  (JSON: docs, summary, improvements)
+FastAPI on Cloud Run
+       ↓  (CodeResponse)
+VS Code Extension
+       ↓  (buildComments())
+Code Editor  ←  comments inserted above function
+
+---
+
 ## 📁 Project Structure
 
 ```
