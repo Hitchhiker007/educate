@@ -1,3 +1,6 @@
 __pycache__/
 .pytest_cache/
 .env
+extension/educate/node_modules/
+extension/educate/out/
+extension/educate/.vscode-test/
