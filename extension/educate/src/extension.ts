@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const selectedText = editor?.document.getText(selection);
 		const startLine = editor?.selection.start.line
 
-		const response = await fetch("http://localhost:8000/educate", {
+		const response = await fetch("https://educate-backend-539946496244.australia-southeast1.run.app/educate", {
 			method: "POST",
 			headers: {	"Content-Type": "application/json"},
 			body: JSON.stringify({code_snippet: selectedText})
@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from educate!');
+		vscode.window.showInformationMessage('Help generated from educate!');
 	});
 
 	context.subscriptions.push(disposable);

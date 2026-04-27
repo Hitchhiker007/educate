@@ -1,9 +1,14 @@
 from pydantic import BaseModel
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from dotenv import load_dotenv
 import os
 from google import genai
 import json
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
+
+
 
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
@@ -12,6 +17,10 @@ client = genai.Client(api_key=api_key)
 # this is a free tier friendly model
 
 app = FastAPI()
+limiter = Limiter(key_func=get_remote_address)
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 INSTRUCTIONS = """ You are a coding tutor helping beginner Python students understand best practices.
 
@@ -48,7 +57,8 @@ def read_root():
         return {"Hello": "World"}
 
 @app.post("/educate")
-def educate(code_request: CodeRequest):
+@limiter.limit("10/minute")
+def educate(request: Request, code_request: CodeRequest):
         prompt = INSTRUCTIONS.format(code=code_request.code_snippet)
         response = client.models.generate_content(
             # use flash latest to auto update whenever google release a new version and depreictaes
